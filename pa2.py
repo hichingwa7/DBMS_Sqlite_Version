@@ -78,7 +78,7 @@ def create(user_input):
             else:
                 file = open(current_db+'/'+user_input[2]+".csv", 'w') # create new table
                 parseStringForColumnNames(user_input[3], file) # calling function for naming the columns
-                print("Table',user_input[2],"created.")
+                print("Table",user_input[2],"created.")
                 file.close()                                            
         else:
             print("Valid database is not selected.") # if existing database is not selected
