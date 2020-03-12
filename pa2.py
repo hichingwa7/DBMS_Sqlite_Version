@@ -206,6 +206,7 @@ def alter(user_input):
                 print('Table',user_input[0],'modified.')
     else:
         print('Table does\'nt exist or database not selected.')
+
 def insert(table_name, values):
     if os.path.isfile(current_db+'/'+table_name+'.csv'): # Checks if the table exists
         if values.startswith("values(") and values.endswith(")"):
@@ -223,8 +224,8 @@ def insert(table_name, values):
             print("wrong syntax")
     else:
         print('Table doesn\'t exist.')
+        
 def update(table_name, set_word, remaining_words):
-    column_in_database = True
     if os.path.isfile(current_db+'/'+table_name+'.csv'): # checks if a table or file exists
         update_values = {}
         with open(current_db+'/'+table_name+'.csv', 'r') as read_column_names:  # opens up a table or file for getting column names
@@ -242,7 +243,6 @@ def update(table_name, set_word, remaining_words):
                     if word in column_names:
                         set_index = column_names.index(word)
                     else:
-                        column_in_database = False
                         print("Entered set column not present in the database.")
                         break
                 else:
@@ -270,7 +270,6 @@ def update(table_name, set_word, remaining_words):
                         if word in column_names:
                             where_index = column_names.index(word)
                         else:
-                            column_in_database = False
                             print("Entered where column not present in the database.")
                     else:
                         after_words[after_words.index(word)] = word.strip()         
@@ -282,6 +281,7 @@ def update(table_name, set_word, remaining_words):
             print("Error in the set name")
     else:
         print('Table does\'nt exist or database not selected.')
+
 def delete(table_name, contents):
     if os.path.isfile(current_db+'/'+table_name+'.csv'):
         with open(current_db+'/'+table_name+'.csv', 'r') as read_column_names: # opens a file and gets column names
@@ -400,6 +400,10 @@ def deleteWriteRows(table_name, col_indexes, change_values, delete_col_dtypes, o
                 i = i-1
     with open(current_db+'/'+table_name+'.csv', 'w') as wf:
         wf.writelines(lines)
-        print(records_modified,'records deleted.')
+        if records_modified == 1:
+            print(records_modified,'record deleted.')
+        elif records_modified > 1:
+            print(records_modified,'records deleted.')
+        #print(records_modified,'records deleted.')
 sqlStatements()
 print('All done.')
