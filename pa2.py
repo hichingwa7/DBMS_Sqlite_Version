@@ -200,9 +200,9 @@ def alter(user_input):
                 break
             with open(current_db+'/'+user_input[0]+'.csv', 'r') as f:        
                 lines = f.readlines()                                               
-                lines[0] = columns+'\n'                                     # Storing the new column names.
+                lines[0] = columns+'\n'                                     # Storing the new column names
             with open(current_db+'/'+user_input[0]+'.csv', 'w') as f:
-                f.writelines(lines)                                         # Writing columns to the file.
+                f.writelines(lines)                                         # Writing columns to the file
                 print('Table',user_input[0],'modified.')
     else:
         print('Table does\'nt exist or database not selected.')
@@ -212,7 +212,7 @@ def insert(table_name, values):
         if values.startswith("values(") and values.endswith(")"):
             values = values[7:-1].split(',') # insertion values are stored in a list
             file = open(current_db+'/'+table_name+'.csv', 'a', newline='')
-            for i in range(len(values)): # this for loop eliminates the quotes if present in the values (ex: 'SuperGizmo').
+            for i in range(len(values)): # this for loop eliminates the quotes if present in the values (ex: 'SuperGizmo')
                 word = values[i].strip()
                 if word.startswith("'") and word.endswith("'"):
                     word = word.replace("'","")
@@ -310,7 +310,7 @@ def delete(table_name, contents):
                     if word.startswith('"') and word.endswith('"'):
                         word = word.replace('"',"")
                     delete_col_values.append(word)
-            deleteWriteRows(table_name, delete_col_indexes, delete_col_values, delete_col_dtypes, delete_col_operators)  # fuction is called with arguments as table name, delete column names, operators and values for deletion.
+            deleteWriteRows(table_name, delete_col_indexes, delete_col_values, delete_col_dtypes, delete_col_operators)  # function is called with arguments as table name, delete column names, operators and values for deletion.
         else:
             print("Table '",table_name,"'doesn't exist.")
 
@@ -404,6 +404,5 @@ def deleteWriteRows(table_name, col_indexes, change_values, delete_col_dtypes, o
             print(records_modified,'record deleted.')
         elif records_modified > 1:
             print(records_modified,'records deleted.')
-        #print(records_modified,'records deleted.')
 sqlStatements()
 print('All done.')
