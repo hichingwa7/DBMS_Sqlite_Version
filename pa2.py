@@ -41,13 +41,13 @@ def sqlStatements():
                 drop(user_input) # calling drop function               
             elif user_input[0] == f_commands[2] and user_input[1] == "table": # crosscheck the first word of input with the contents of the "f_commands list"
                 print()
-                alter(user_input[2:]) # calling alter function               
+                alter(user_input[2:]) # calling alter function
             elif user_input[0] == f_commands[3]: # crosscheck the first word of input with the contents of the "f_commands list"
                 print()
                 use(user_input) # calling use function               
-            elif user_input[0] == f_commands[4]:  # crosscheck the first word of input with the contents of the "f_commands list"
+            elif user_input[0] == f_commands[4]: # crosscheck the first word of input with the contents of the "f_commands list"
                 print()
-                select(' '.join(user_input[1:])) # calling select function               
+                select(' '.join(user_input[1:])) # calling select function
             elif user_input[0] == f_commands[5] and user_input[1] == "into":
                 insert(user_input[2], user_input[3])               
             elif user_input[0] == f_commands[6]:
