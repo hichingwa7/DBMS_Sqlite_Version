@@ -11,7 +11,7 @@ w_loop = True
 current_db = "NOT SELECTED"
 
 def sqlStatements():
-    # function makes the required sql statements calls for this program
+    # function definition for the required sql statements calls for this program
     user_input = ""
     while w_loop:
         try:
