@@ -3,7 +3,7 @@
 # programming language: Python
 # description: program that allows allows a database user to make queries over multiple tables
 
-import os 
+import os
 import csv
 
 f_commands = ['create', 'drop', 'alter', 'use', 'select', 'insert', 'update', 'delete'] # a list of functions used in this program
@@ -11,6 +11,7 @@ w_loop = True
 current_db = "NOT SELECTED"
 
 def sqlStatements():
+    # function makes the required sql statements calls for this program
     user_input = ""
     while w_loop:
         try:
@@ -141,7 +142,7 @@ def select(user_input):
                 ind = before_from_after[2].lower().index('where')
                 before_from_after = list(before_from_after)
                 before_from_after[2] = before_from_after[2][:ind]+"where"+before_from_after[2][ind+5:]
-                before_where_after = before_from_after[2].partition('where') # partitioing query before and after 'before' keyword
+                before_where_after = before_from_after[2].partition('where') # partitioning query before and after 'before' keyword
                 table_names = before_where_after[0].split(',')
                 after_where = before_where_after[2].strip().split(' ')
                 getTableNamesAndAliases(table_names, table_aliases) # call method for table names and their aliases
@@ -220,7 +221,7 @@ def select(user_input):
         print("Database not selected ('use database' statement).")
 
 def getTableNamesAndAliases(table_names, table_aliases):
-    
+    # function for getting the table names and their aliases
     i = 0
     for word in table_names:
         # get table names and their aliases in different lists using this loop
@@ -230,7 +231,7 @@ def getTableNamesAndAliases(table_names, table_aliases):
         i += 1
         
 def getExistingColumnNames(table_names, existing_table_col_names, allColumns):
-    
+    # function for storing existing column names
     for i in range(len(table_names)): 
         # store existing table column names in dictionaries using this loop
         with open(current_db+'/'+table_names[i]+'.csv', 'r') as read_column_names:
@@ -241,7 +242,7 @@ def getExistingColumnNames(table_names, existing_table_col_names, allColumns):
             existing_table_col_names[table_names[i]] = column_names
             
 def getAllOtherLists(after_on_or_where, table_aliases, existing_table_col_names, table_names, where_col_ind, where_ops, where_vals_ind):
-    
+    # function for getting all lists with where comparison values and operators
     for word in after_on_or_where: 
         # for loop for getting where comparision values and operators in seperate lists
         if after_on_or_where.index(word) % 3 == 0:
@@ -260,7 +261,7 @@ def getAllOtherLists(after_on_or_where, table_aliases, existing_table_col_names,
                     where_vals_ind.append(temp_cols.index(table_and_column_names[1]))
                     
 def printSelectWhereOrOnQuery(table_names, where_ops, where_vals_ind, where_col_ind, join_name, allColumns):
-    
+    # function joins only two tables in the query
     if len(table_names) == 2:
         print(','.join(allColumns[0]).replace(',','|'),end="|",flush = True)
         print(','.join(allColumns[1]).replace(',','|'))
@@ -312,7 +313,7 @@ def alter(user_input):
         print("Table does\'nt exist or database not selected.")
 
 def insert(table_name, values):
-    
+    # function inserts values in the list
     if os.path.isfile(current_db+'/'+table_name+'.csv'): # checks if a table exists
         if values.startswith("values(") and values.endswith(")"):
             values = values[7:-1].split(',') # insertion values are stored in a list
@@ -332,7 +333,7 @@ def insert(table_name, values):
         print('Table doesn\'t exist.')
 
 def update(table_name, set_word, remaining_words):
-    
+    # function updates the specified table
     column_in_database = True
     if os.path.isfile(current_db+'/'+table_name+'.csv'): # checks if a table or file exists
         update_values = {}
@@ -393,7 +394,7 @@ def update(table_name, set_word, remaining_words):
         print("Table does\'nt exist or database not selected.")
         
 def delete(table_name, contents):
-    
+    # function deletes table contents
     if os.path.isfile(current_db+'/'+table_name+'.csv'):
         with open(current_db+'/'+table_name+'.csv', 'r') as read_column_names: # opens a file and get column names
             reader = csv.reader(read_column_names)
@@ -441,13 +442,13 @@ def parse_string_for_column_names(input_string, file):
         print("Error in open or close brackets.")
         
 def write_row_values(values, file):
-    
+    # function for inserting new records
     writer = csv.writer(file)
     writer.writerow(values)
     print("1 new record inserted.")
     
 def get_only_column_names(columns):
-    
+    # function gets only column names
     names = []
     for i in range(len(columns)):
         single_column_name = columns[i].rsplit(' ',1)
@@ -455,7 +456,7 @@ def get_only_column_names(columns):
     return names
 
 def get_column_datatypes(columns):
-    
+    # function gets data types for the column names
     names = []
     for i in range(len(columns)):
         single_column_name = columns[i].rsplit(' ',1)
